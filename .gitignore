@@ -1,0 +1,13 @@
+# Local and temporary files
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+vendor/
+coverage/
+.phpunit.cache/

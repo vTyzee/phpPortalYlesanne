@@ -1,0 +1,1 @@
+<section class="site-width section"><div class="empty-state"><span class="section-label">ÕPIEESTIS</span><h1><?= e($title??'Midagi läks valesti') ?></h1><p><?= e($message??'') ?></p><a class="btn btn-primary" href="<?= e(url()) ?>">Tagasi avalehele →</a></div></section>
