@@ -1,6 +1,30 @@
-<?php $section='home'; ?>
-<section class="hero"><div class="site-width hero-grid"><div class="hero-copy"><div class="eyebrow"><span class="eyebrow-dot"></span> SINU UUS ÕPPIMISE KOHT</div><h1>Õpi uusi oskusi.<br><span>Liigu omas tempos.</span></h1><p>Selged õppematerjalid, praktilised harjutused ja teadmiste kontroll – kõik ühes kohas, just sinu jaoks.</p><div class="hero-actions"><a class="btn btn-primary btn-large" href="<?= e(url('lessons')) ?>">Alusta õppimist <span aria-hidden="true">↗</span></a><a class="btn btn-light btn-large" href="<?= e(url('subjects')) ?>">Tutvu õppeainetega <span aria-hidden="true">→</span></a></div><div class="hero-highlights"><span>✓ Tasuta õppematerjalid</span><span>✓ Õpi endale sobival ajal</span></div></div><div class="hero-visual" aria-hidden="true"><div class="visual-orbit orbit-one"></div><div class="visual-orbit orbit-two"></div><div class="visual-note note-top"><span class="note-icon">✳</span><span>Väike samm iga päev<small>Järjepidevus loeb</small></span></div><div class="visual-main"><div class="visual-main-top"><span class="visual-main-kicker">TÄNANE ÕPPETUND</span><span class="visual-dots">•••</span></div><div class="visual-book"><span>Aa</span><span class="visual-book-line"></span><span class="visual-book-line short"></span></div><div class="visual-main-foot"><div><b>Eesti keel</b><small>Õpi uusi väljendeid</small></div><span class="visual-arrow">↗</span></div></div><div class="visual-note note-bottom"><span class="note-check">✓</span><span>Tehtud on parem<small>kui tegemata!</small></span></div><div class="visual-spark spark-one">✦</div><div class="visual-spark spark-two">✳</div></div></div></section>
-<div class="site-width"><div class="trust-strip"><span><b><?= (int)$lessonCount ?></b> õppematerjali</span><span class="trust-divider"></span><span><b><?= count($subjects) ?></b> õppeainet</span><span class="trust-divider"></span><span><b>100%</b> sinu tempos</span></div></div>
-<section class="section site-width" id="ained"><div class="section-heading"><div><span class="section-label">LEIA OMA SUUND</span><h2>Mida soovid täna õppida?</h2><p>Vali õppeaine ja alusta just sellest teemast, mis sulle huvi pakub.</p></div><a class="text-link" href="<?= e(url('subjects')) ?>">Kõik õppeained <span aria-hidden="true">↗</span></a></div><div class="subject-grid"><?php foreach ($subjects as $subject): ?><a class="subject-card tone-<?= e($subject['tone']) ?>" href="<?= e(url('lessons?subject='.$subject['id'])) ?>"><span class="subject-icon" aria-hidden="true"><?= e($subject['icon']) ?></span><span class="subject-title"><?= e($subject['name']) ?></span><span class="subject-description"><?= e($subject['description']) ?></span><span class="subject-bottom"><?= (int)$subject['lesson_count'] ?> õppetundi <span aria-hidden="true">↗</span></span></a><?php endforeach; ?></div></section>
-<section class="section section-muted"><div class="site-width"><div class="section-heading"><div><span class="section-label">VALITUD ÕPPETUNNID</span><h2>Alusta siit</h2><p>Lühikesed ja praktilised õppematerjalid igaks päevaks.</p></div><a class="text-link" href="<?= e(url('lessons')) ?>">Vaata kõiki <span aria-hidden="true">↗</span></a></div><div class="lesson-grid"><?php foreach ($lessons as $lesson) include __DIR__.'/partials/lesson-card.php'; ?></div><?php if (!$lessons): ?><div class="empty-state">Õppetunnid lisatakse peagi.</div><?php endif; ?></div></section>
-<section class="site-width bottom-cta"><div class="cta-decoration" aria-hidden="true">✳</div><div><span class="section-label">VALMIS ALUSTAMA?</span><h2>Sinu järgmine samm algab täna.</h2><p>Loo tasuta konto ja salvesta oma testide tulemused.</p></div><a class="btn btn-white btn-large" href="<?= e(url(is_logged_in()?'dashboard':'register')) ?>"><?= is_logged_in()?'Minu õpitee':'Loo tasuta konto' ?> <span aria-hidden="true">↗</span></a></section>
+<?php $section = 'home'; ?>
+<section class="np-home-heading site-width">
+    <p class="np-kicker">ÕPPEPORTAAL</p>
+    <h1>TOP 3 ÕPPEMATERJALID</h1>
+    <p>Uued õppematerjalid Eesti õppijatele. Vali õppeaine ja ava endale sobiv tund.</p>
+</section>
+<div class="site-width np-home-layout">
+    <section class="np-home-main" aria-label="Viimased õppematerjalid">
+        <?php if ($lessons): ?>
+            <div class="lesson-grid news-list">
+                <?php foreach ($lessons as $lesson): ?>
+                    <?php include __DIR__ . '/partials/lesson-card.php'; ?>
+                <?php endforeach; ?>
+            </div>
+        <?php else: ?>
+            <p class="empty-state">Õppematerjalid lisatakse peagi.</p>
+        <?php endif; ?>
+        <a class="btn btn-primary np-more" href="<?= e(url('lessons')) ?>">Kõik õppematerjalid →</a>
+    </section>
+    <aside class="np-side" aria-label="Õppeained">
+        <h2>Õppeained</h2>
+        <ul>
+            <?php foreach ($subjects as $subject): ?>
+                <li><a href="<?= e(url('lessons?subject=' . (int)$subject['id'])) ?>"><?= e($subject['name']) ?><span><?= (int)$subject['lesson_count'] ?></span></a></li>
+            <?php endforeach; ?>
+        </ul>
+        <a class="np-side-all" href="<?= e(url('subjects')) ?>">Vaata kõiki õppeaineid →</a>
+        <p class="np-side-note">Õpi omas tempos ja kontrolli teadmisi testi abil.</p>
+    </aside>
+</div>

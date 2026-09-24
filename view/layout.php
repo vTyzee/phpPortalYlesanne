@@ -1,23 +1,63 @@
+<?php
+// The same layout is used for all public, account and admin pages.
+// Subject links are shown in the navigation just like categories in Newsportal.
+try {
+    $navigationSubjects = isset($subjects) && is_array($subjects) ? $subjects : Subject::all();
+} catch (PDOException $exception) {
+    // Keep the friendly database-error page accessible when MySQL is unavailable.
+    $navigationSubjects = [];
+}
+?>
 <!doctype html>
 <html lang="et">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="ÕpiEestis – tasuta õppematerjalid, õppetunnid ja enesekontrollid Eestis õppijatele.">
-  <title><?= e(($title ?? 'Avaleht').' · ÕpiEestis') ?></title>
-  <link rel="stylesheet" href="<?= e(url('assets/style.css')) ?>">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="ÕpiEestis – õppematerjalid ja teadmiste kontroll Eestis õppijatele.">
+    <title><?= e(($title ?? 'Avaleht') . ' · ÕpiEestis') ?></title>
+    <link rel="stylesheet" href="<?= e(url('assets/style.css')) ?>">
 </head>
 <body>
 <a class="skip-link" href="#sisu">Liigu sisu juurde</a>
-<header class="site-header">
-  <div class="site-width header-inner">
-    <a href="<?= e(url()) ?>" class="brand" aria-label="ÕpiEestis avaleht"><span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span><span>Õpi<span class="brand-accent">Eestis</span><small>Õppimise portaal</small></span></a>
-    <nav class="main-nav" aria-label="Peamenüü"><a href="<?= e(url()) ?>" <?= ($section??'')==='home'?'aria-current="page"':'' ?>>Avaleht</a><a href="<?= e(url('subjects')) ?>" <?= ($section??'')==='subjects'?'aria-current="page"':'' ?>>Õppeained</a><a href="<?= e(url('lessons')) ?>" <?= ($section??'')==='lessons'?'aria-current="page"':'' ?>>Õppetunnid</a></nav>
-    <div class="header-actions">
-      <?php if (is_logged_in()): ?><a class="header-profile" href="<?= e(url('dashboard')) ?>">Minu õpitee</a><?php if (is_admin()): ?><a class="header-profile" href="<?= e(url('admin/')) ?>">Haldus</a><?php endif; ?><form method="post" action="<?= e(url('admin/logout')) ?>"><input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>"><button class="btn btn-outline btn-small" type="submit">Välju</button></form>
-      <?php else: ?><a class="header-profile" href="<?= e(url('admin/')) ?>">Logi sisse</a><a class="btn btn-primary btn-small" href="<?= e(url('register')) ?>">Loo konto <span aria-hidden="true">↗</span></a><?php endif; ?>
+<header class="np-header">
+    <div class="site-width np-brandbar">
+        <a class="np-brand" href="<?= e(url()) ?>">Õpi<span>Eestis</span></a>
+        <span class="np-tagline">Õppematerjalid ja testid Eestis õppijatele</span>
     </div>
-  </div>
+    <nav class="np-nav" aria-label="Peamenüü">
+        <div class="site-width np-nav-inner">
+            <ul class="np-menu">
+                <li class="np-dropdown">
+                    <details>
+                        <summary>Õppeained <span aria-hidden="true">▾</span></summary>
+                        <ul class="np-submenu">
+                            <li><a href="<?= e(url('subjects')) ?>">Kõik õppeained</a></li>
+                            <?php foreach ($navigationSubjects as $subject): ?>
+                                <li><a href="<?= e(url('lessons?subject=' . (int)$subject['id'])) ?>"><?= e($subject['name']) ?></a></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </details>
+                </li>
+                <li><a href="<?= e(url('lessons')) ?>" <?= ($section ?? '') === 'lessons' ? 'aria-current="page"' : '' ?>>Kõik õppematerjalid</a></li>
+                <li><a href="<?= e(url()) ?>" <?= ($section ?? '') === 'home' ? 'aria-current="page"' : '' ?>>Avaleht</a></li>
+                <?php if (!is_logged_in()): ?>
+                    <li><a href="<?= e(url('register')) ?>">Registreeru</a></li>
+                    <li><a href="<?= e(url('admin/')) ?>">Logi sisse</a></li>
+                <?php else: ?>
+                    <li><a href="<?= e(url('dashboard')) ?>">Minu õpitee</a></li>
+                    <?php if (is_admin()): ?><li><a href="<?= e(url('admin/')) ?>">Halduspaneel</a></li><?php endif; ?>
+                <?php endif; ?>
+            </ul>
+            <?php if (is_logged_in()): ?>
+                <form class="np-logout" method="post" action="<?= e(url('admin/logout')) ?>">
+                    <input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>">
+                    <button type="submit">Välju</button>
+                </form>
+            <?php endif; ?>
+        </div>
+    </nav>
 </header>
-<main id="sisu"><?= $content ?></main>
-<footer class="site-footer"><div class="site-width footer-inner"><div><a href="<?= e(url()) ?>" class="footer-brand">Õpi<span>Eestis</span></a><p>Õpi omas tempos. Avasta uusi teadmisi.</p></div><div class="footer-links"><a href="<?= e(url('subjects')) ?>">Õppeained</a><a href="<?= e(url('lessons')) ?>">Õppetunnid</a><a href="<?= e(url('register')) ?>">Loo konto</a></div><small>Õppeprojekt · Ei ole Eesti riigi ametlik teenus.</small></div></footer>
-</body></html>
+<main id="sisu" class="np-page"><?= $content ?? '' ?></main>
+<footer class="np-footer"><div class="site-width">ÕpiEestis · Õppeprojekt, mitte Eesti riigi ametlik teenus.</div></footer>
+</body>
+</html>

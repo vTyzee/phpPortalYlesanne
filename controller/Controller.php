@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 class Controller {
-    public static function home(): void { render('home',['subjects'=>Subject::all(),'lessons'=>Lesson::latest(),'lessonCount'=>Lesson::count(),'title'=>'Õppimine algab siit']); }
+    public static function home(): void { render('home',['subjects'=>Subject::all(),'lessons'=>Lesson::latest(3),'lessonCount'=>Lesson::count(),'title'=>'Õppimine algab siit']); }
     public static function subjects(): void { render('subjects',['subjects'=>Subject::all(),'title'=>'Õppeained']); }
     public static function lessons(): void {
         $subject=filter_input(INPUT_GET,'subject',FILTER_VALIDATE_INT) ?: null;
