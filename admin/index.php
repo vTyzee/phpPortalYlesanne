@@ -2,7 +2,7 @@
 declare(strict_types=1);
 require __DIR__.'/../inc/bootstrap.php';
 require __DIR__.'/../inc/db.php';
-foreach (['Subject','Lesson','Quiz','Comments','Auth'] as $model) require __DIR__.'/../model/'.$model.'.php';
+foreach (['Subject','Lesson','Quiz','Comments','Auth','Bookmark'] as $model) require __DIR__.'/../model/'.$model.'.php';
 require __DIR__.'/../admin/AdminController.php';
 $path=trim((string)parse_url($_SERVER['REQUEST_URI']??'',PHP_URL_PATH),'/');
 $path=substr($path,strrpos($path,'/')+1);

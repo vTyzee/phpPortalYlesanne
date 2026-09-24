@@ -13,6 +13,7 @@ try {
         case 'image': Controller::image();break;
         case 'quiz': Controller::quiz();break;
         case 'comment': Controller::comment();break;
+        case 'bookmark': Controller::bookmark();break;
         case 'register': Controller::register();break;
         case 'registerAnswer': Controller::registerAnswer();break;
         case 'dashboard': Controller::dashboard();break;

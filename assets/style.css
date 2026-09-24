@@ -58,3 +58,9 @@
 .np-footer{border-top:1px solid var(--line);padding:21px 0;background:#f8faf8;color:var(--sub);font-size:12px;text-align:center}
 @media(max-width:850px){.np-home-layout{grid-template-columns:1fr}.np-side{order:-1}.np-nav-inner{flex-wrap:wrap}.np-logout{margin-left:auto}}
 @media(max-width:600px){.np-tagline{display:none}.np-brandbar{padding-top:14px;padding-bottom:14px}.np-menu a,.np-menu summary,.np-logout button{font-size:12px;padding:12px 10px}.np-submenu{min-width:195px}.np-home-heading{padding-top:29px}.np-home-layout{padding-top:18px}.news-list .lesson-card{grid-template-columns:110px minmax(0,1fr);gap:12px}.news-list .card-cover{height:94px}.news-list .card-body h3{font-size:16px}.news-list .card-body p{font-size:12px;line-height:1.5}.news-list .card-meta{font-size:10px}}
+
+/* Õppematerjali salvestamine ja testi vastusepõhine tagasiside. */
+.save-lesson-form{margin:0 0 18px}.save-hint{font-size:13px}.saved-panel{margin-top:22px}
+.saved-lessons{margin:0;padding:0;list-style:none}.saved-lessons li{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid var(--line)}.saved-lessons a{font-weight:800;color:var(--green-dark)}.saved-lessons span{font-size:12px;color:var(--sub)}
+.quiz-feedback{text-align:left;margin:24px 0}.quiz-feedback h3{font-size:18px}.feedback-item{padding:15px 17px;margin:10px 0;border:1px solid var(--line);border-left:4px solid var(--green);border-radius:9px;background:#f6fbf7}.feedback-item p{margin:5px 0;font-size:13px}.feedback-incorrect{border-left-color:#ba534d;background:#fff8f7}.feedback-incorrect strong{color:#a23c37}
+@media(max-width:600px){.saved-lessons li{flex-direction:column;align-items:flex-start;gap:2px}}

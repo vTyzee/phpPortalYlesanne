@@ -39,3 +39,25 @@ function quiz_score(array $questions, array $answers): array {
     }
     return ['correct' => $correct, 'total' => count($questions)];
 }
+
+/** Koostab pärast testi vastusepõhise tagasiside, ilma vastusevõtit enne testi näitamata. */
+function quiz_feedback(array $questions, array $key, array $answers): array {
+    $correctByQuestion = [];
+    foreach ($key as $row) $correctByQuestion[(int)$row['id']] = (int)$row['correct_option_id'];
+    $feedback = [];
+    foreach ($questions as $question) {
+        $id = (int)$question['id'];
+        $chosen = isset($answers[$id]) ? (int)$answers[$id] : null;
+        $correctId = $correctByQuestion[$id] ?? null;
+        $correctLabel = '';
+        foreach ($question['options'] as $option) {
+            if ((int)$option['id'] === $correctId) $correctLabel = (string)$option['option_text'];
+        }
+        $feedback[] = [
+            'question' => (string)$question['question'],
+            'correct' => $correctId !== null && $chosen === $correctId,
+            'answer' => $correctLabel,
+        ];
+    }
+    return $feedback;
+}

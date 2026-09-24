@@ -14,7 +14,7 @@ class Controller {
     public static function lesson(): void {
         $id=filter_input(INPUT_GET,'id',FILTER_VALIDATE_INT) ?: 0;$lesson=Lesson::find($id);
         if (!$lesson) {http_response_code(404);render('error',['title'=>'Õppetundi ei leitud','message'=>'See õppematerjal ei ole saadaval.']);return;}
-        render('lesson',['lesson'=>$lesson,'comments'=>Comments::byLesson($id),'questionCount'=>count(Quiz::questions($id)),'title'=>$lesson['title']]);
+        render('lesson',['lesson'=>$lesson,'comments'=>Comments::byLesson($id),'questionCount'=>count(Quiz::questions($id)),'bookmarked'=>is_logged_in() ? Bookmark::has((int)$_SESSION['user_id'],$id) : false,'title'=>$lesson['title']]);
     }
     public static function image(): void {
         $id=filter_input(INPUT_GET,'id',FILTER_VALIDATE_INT) ?: 0;
@@ -30,10 +30,12 @@ class Controller {
         if ($_SERVER['REQUEST_METHOD']==='POST') {
             if (!csrf_valid()) {http_response_code(400);render('error',['title'=>'Vorm aegus','message'=>'Värskenda lehte ja proovi uuesti.']);return;}
             $selected=Quiz::validAnswers($id,is_array($_POST['answer']??null)?$_POST['answer']:[]);
-            $result=quiz_score(Quiz::key($id),$selected);
+            $key=Quiz::key($id);
+            $result=quiz_score($key,$selected);
+            $feedback=quiz_feedback($questions,$key,$selected);
             if (is_logged_in() && $result['total']>0) Quiz::store((int)$_SESSION['user_id'],$id,$result['correct'],$result['total']);
         }
-        render('quiz',['lesson'=>$lesson,'questions'=>$questions,'result'=>$result,'selected'=>$selected,'title'=>'Teadmiste kontroll']);
+        render('quiz',['lesson'=>$lesson,'questions'=>$questions,'result'=>$result,'selected'=>$selected,'feedback'=>$feedback??[],'title'=>'Teadmiste kontroll']);
     }
     public static function comment(): void {
         require_login();
@@ -43,6 +45,22 @@ class Controller {
         if (Lesson::find($id) && mb_strlen($text)>0 && mb_strlen($text)<=1200) Comments::add($id,(int)$_SESSION['user_id'],$text);
         redirect('lesson?id='.$id.'#arutelu');
     }
+    public static function bookmark(): void {
+        require_login();
+        if ($_SERVER['REQUEST_METHOD']!=='POST'||!csrf_valid()) {
+            http_response_code(400);
+            render('error',['title'=>'Vorm aegus','message'=>'Värskenda lehte ja proovi uuesti.']);
+            return;
+        }
+        $id=filter_input(INPUT_POST,'lesson_id',FILTER_VALIDATE_INT) ?: 0;
+        if (!Lesson::find($id)) {
+            http_response_code(404);
+            render('error',['title'=>'Õppetundi ei leitud','message'=>'Vali mõni teine õppetund.']);
+            return;
+        }
+        Bookmark::toggle((int)$_SESSION['user_id'],$id);
+        redirect('lesson?id='.$id);
+    }
     public static function register(): void {render('register',['title'=>'Loo konto']);}
     public static function registerAnswer(): void {
         if ($_SERVER['REQUEST_METHOD']!=='POST'||!csrf_valid()) {http_response_code(400);render('error',['title'=>'Vorm aegus','message'=>'Värskenda lehte ja proovi uuesti.']);return;}
@@ -51,7 +69,7 @@ class Controller {
         flash('Konto on loodud. Logi sisse, et oma tulemusi salvestada.');redirect('admin/');
     }
     public static function dashboard(): void {
-        require_login();$progress=Quiz::progress((int)$_SESSION['user_id']);$history=Quiz::history((int)$_SESSION['user_id']);
-        render('dashboard',['progress'=>$progress,'history'=>$history,'title'=>'Minu õpitee']);
+        require_login();$progress=Quiz::progress((int)$_SESSION['user_id']);$history=Quiz::history((int)$_SESSION['user_id']);$bookmarks=Bookmark::forUser((int)$_SESSION['user_id']);
+        render('dashboard',['progress'=>$progress,'history'=>$history,'bookmarks'=>$bookmarks,'title'=>'Minu õpitee']);
     }
 }
