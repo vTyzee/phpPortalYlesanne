@@ -64,3 +64,6 @@
 .saved-lessons{margin:0;padding:0;list-style:none}.saved-lessons li{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid var(--line)}.saved-lessons a{font-weight:800;color:var(--green-dark)}.saved-lessons span{font-size:12px;color:var(--sub)}
 .quiz-feedback{text-align:left;margin:24px 0}.quiz-feedback h3{font-size:18px}.feedback-item{padding:15px 17px;margin:10px 0;border:1px solid var(--line);border-left:4px solid var(--green);border-radius:9px;background:#f6fbf7}.feedback-item p{margin:5px 0;font-size:13px}.feedback-incorrect{border-left-color:#ba534d;background:#fff8f7}.feedback-incorrect strong{color:#a23c37}
 @media(max-width:600px){.saved-lessons li{flex-direction:column;align-items:flex-start;gap:2px}}
+
+/* Kõigi õppeainete kaartidel sama must-valge-roheline visuaalne keel. */
+.tone-lilac,.tone-blue,.tone-peach,.tone-green{background:#e9f6ed}

@@ -90,9 +90,9 @@ CREATE TABLE IF NOT EXISTS lesson_bookmarks (
 
 INSERT IGNORE INTO subjects (id,name,slug,description,icon,tone,sort_order) VALUES
 (1,'Eesti keel','eesti-keel','Sõnavara, grammatika ja igapäevased väljendid.','Aa','green',1),
-(2,'Matemaatika','matemaatika','Selged selgitused ja praktilised ülesanded.','∑','lilac',2),
-(3,'Inglise keel','inglise-keel','Kasulikud väljendid ja keeleharjutused.','En','blue',3),
-(4,'Informaatika','informaatika','Digioskused ja programmeerimise alused.','</>','peach',4);
+(2,'Matemaatika','matemaatika','Selged selgitused ja praktilised ülesanded.','∑','green',2),
+(3,'Inglise keel','inglise-keel','Kasulikud väljendid ja keeleharjutused.','En','green',3),
+(4,'Informaatika','informaatika','Digioskused ja programmeerimise alused.','</>','green',4);
 
 INSERT IGNORE INTO lessons (id,subject_id,title,summary,body,level,duration_min,published) VALUES
 (1,1,'Tervitused ja viisakusväljendid','Õpi, kuidas eesti keeles tervitada, tänada ja viisakalt vestlust alustada.','Eesti keeles öeldakse hommikul „Tere hommikust!“, päeva jooksul „Tere!“ ja õhtul „Tere õhtust!“.\n\nViisakad väljendid aitavad suhtlust alustada: „Palun“ tähendab please ning „Aitäh“ tähendab thank you.\n\nNäited:\nTere! Kuidas läheb?\nHästi, aitäh! Aga sinul?\nKa minul läheb hästi.\n\nHarjuta: tervita täna kedagi eesti keeles ja küsi, kuidas tal läheb.', 'Algaja',8,1),
