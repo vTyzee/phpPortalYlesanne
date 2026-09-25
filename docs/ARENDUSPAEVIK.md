@@ -14,3 +14,9 @@ See projekt kasutab **uut eraldi Git-repositooriumi**. Esimene commit importis j
 | 8 | Add technical documentation, user guide, test plan and project evaluation | README juhised ning PDF- ja Markdown-dokumendid. |
 
 **Uue GitHubi repositooriumi loomine** on kirjeldatud README jaotises „GitHubi uus repositoorium”. Kommittide kuupäevad on paketis kohaliku arenduskeskkonna kuupäevad, mitte väited varasema Newsportali arenduse aja kohta.
+
+## Viimane täiendus
+
+- Lisatud administraatorile kommentaaride kustutamine õppematerjali arutelust.
+- `KASUTUSDOKUMENTATSIOON.md` asendatud ekraanipiltidega `KASUTUSJUHEND.md` failiga.
+- Lisatud projekti töölaud Todo / In Progress / Done jaotusega.

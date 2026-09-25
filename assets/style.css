@@ -67,3 +67,5 @@
 
 /* Kõigi õppeainete kaartidel sama must-valge-roheline visuaalne keel. */
 .tone-lilac,.tone-blue,.tone-peach,.tone-green{background:#e9f6ed}
+
+.comment-meta-actions{display:flex;align-items:center;gap:12px}.comment-meta-actions form{margin:0}.comment-meta-actions .delete-link{font-size:12px}

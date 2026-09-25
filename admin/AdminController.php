@@ -86,6 +86,28 @@ class AdminController {
         }
         render('admin-quiz',['title'=>'Testi haldamine','lesson'=>$lesson,'questions'=>Quiz::questions($lessonId),'formError'=>$error]);
     }
+    public static function deleteComment(): void {
+        require_admin();
+        if ($_SERVER['REQUEST_METHOD']!=='POST'||!csrf_valid()) {
+            http_response_code(400);
+            render('error',['title'=>'Vorm aegus','message'=>'Proovi uuesti.']);
+            return;
+        }
+        $commentId=filter_input(INPUT_POST,'comment_id',FILTER_VALIDATE_INT) ?: 0;
+        $lessonId=filter_input(INPUT_POST,'lesson_id',FILTER_VALIDATE_INT) ?: 0;
+        if (!$lessonId || !Lesson::find($lessonId,false)) {
+            http_response_code(404);
+            render('error',['title'=>'Õppetundi ei leitud','message'=>'Kommentaari ei saanud kustutada.']);
+            return;
+        }
+        if ($commentId && Comments::delete($commentId,$lessonId)) {
+            flash('Kommentaar on kustutatud.');
+        } else {
+            flash('Kommentaari ei leitud.');
+        }
+        redirect('lesson?id='.$lessonId.'#arutelu');
+    }
+
     public static function delete(): void {
         require_admin();
         if ($_SERVER['REQUEST_METHOD']!=='POST'||!csrf_valid()) {http_response_code(400);render('error',['title'=>'Vorm aegus','message'=>'Proovi uuesti.']);return;}

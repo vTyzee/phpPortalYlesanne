@@ -15,5 +15,6 @@ try {switch($path){
   case 'edit':AdminController::edit();break;
   case 'delete':AdminController::delete();break;
   case 'quiz':AdminController::quiz();break;
+  case 'comment-delete':AdminController::deleteComment();break;
   default:http_response_code(404);render('error',['title'=>'Lehte ei leitud','message'=>'Kontrolli veebiaadressi.']);
 }} catch(PDOException $e){error_log((string)$e);http_response_code(503);render('error',['title'=>'Andmebaasiga ühendamine ei õnnestunud','message'=>'Kontrolli MySQL-i ja andmebaasi seadistust.']);}

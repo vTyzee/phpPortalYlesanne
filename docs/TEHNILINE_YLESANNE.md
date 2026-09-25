@@ -24,7 +24,7 @@ Luua õppijale lihtne veebikeskkond, kus Eesti kontekstis kasutatavaid õppemate
 | F03 | Õppematerjalide otsing ja tasemefilter. | Pealkirja/sisu otsing ning valitud raskusaste vähendavad loendit. |
 | F04 | Õppetunni detailvaade. | Pealkiri, tekst, õppeaine, tase, kestus, vabatahtlik pilt ja arutelu on nähtavad. |
 | F05 | Registreerimine ja sisselogimine. | Uuele kontole antakse alati roll `user`; vale parool ei logi sisse. |
-| F06 | Kommentaarid ja salvestatud materjalid. | Sisseloginud õppija saab lisada kommentaari ja salvestada/eemaldada enda materjale. |
+| F06 | Kommentaarid ja salvestatud materjalid. | Sisseloginud õppija saab lisada kommentaari ja salvestada/eemaldada enda materjale; administraator saab sobimatu kommentaari kustutada. |
 | F07 | Valikvastustega teadmiste kontroll. | Test arvutab punktid, näitab iga küsimuse õiget vastust ja salvestab sisseloginud õppija tulemuse. |
 | F08 | Minu õpitee. | Konto lehel kuvatakse tulemuste kokkuvõte, viimased katsed ja kuni 20 salvestatud õppematerjali. |
 | F09 | Haldus: õppematerjalide CRUD. | Admin lisab, muudab, avaldab/peidab ja kustutab õppematerjali; user ei saa haldusesse. |

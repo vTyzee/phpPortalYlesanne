@@ -34,16 +34,17 @@ Iga testi puhul kirjuta üles: kuupäev, testija, tulemus OK / VIGA / POLE TESTI
 | T12 | Loo admin CLI abil ning logi sisse. | Halduspaneel avaneb ja näitab materjalide haldust. |
 | T13 | Lisa õppematerjal, kaanepilt, muuda seda ja peida. | Salvestatud materjal ja pilt kuvatakse; peidetud materjali külaline ei näe. |
 | T14 | Lisa ja kustuta testiküsimus. | Küsimus ilmub testis ning kustutamisel kaob. |
-| T15 | Kustuta testmaterjal adminina. | Õppematerjal ning seotud kommentaarid/testiandmed kaovad. |
-| T16 | Proovi vigast CSRF-tokenit kommentaari/haldustoimingu POST-is. | Toiming ei lähe läbi; kuvatakse veateade. |
-| T17 | Ava projekt telefonis või väikese brauseriaknaga. | Menüüd ja materjalid on loetavad ilma horisontaalse ülevooluta. |
-| T18 | Ava SQL-ita installatsioon. | Ilmub arusaadav andmebaasi veateade, mitte toorelt nähtav SQL/parool. |
+| T15 | Kustuta kommentaar adminina õppematerjali arutelust. | Kommentaar kaob ning tavakasutajal kustutamisnuppu ei ole. |
+| T16 | Kustuta testmaterjal adminina. | Õppematerjal ning seotud kommentaarid/testiandmed kaovad. |
+| T17 | Proovi vigast CSRF-tokenit kommentaari/haldustoimingu POST-is. | Toiming ei lähe läbi; kuvatakse veateade. |
+| T18 | Ava projekt telefonis või väikese brauseriaknaga. | Menüüd ja materjalid on loetavad ilma horisontaalse ülevooluta. |
+| T19 | Ava SQL-ita installatsioon. | Ilmub arusaadav andmebaasi veateade, mitte toorelt nähtav SQL/parool. |
 
 ## 3. Testimispäevik (täida pärast päris kontrolli)
 
 | Kuupäev | Testija | Testid | Tulemus | Paranduse commit / märkus |
 | --- | --- | --- | --- | --- |
-| — | — | T01–T18 | POLE TESTITUD | Täida enda Windows/XAMPP keskkonnas. |
+| — | — | T01–T19 | POLE TESTITUD | Täida enda Windows/XAMPP keskkonnas. |
 
 ## 4. Tulevased automaattestid ja koodikate
 

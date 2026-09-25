@@ -1,2 +1,95 @@
-<section class="page-heading small-heading"><div class="site-width"><nav class="breadcrumb" aria-label="Asukoht"><a href="<?= e(url()) ?>">Avaleht</a><span aria-hidden="true">/</span><a href="<?= e(url('lessons?subject='.$lesson['subject_id'])) ?>"><?= e($lesson['subject_name']) ?></a><span aria-hidden="true">/</span><span>Õppetund</span></nav><span class="section-label"><?= e($lesson['subject_name']) ?> · <?= e($lesson['level']) ?> · <?= (int)$lesson['duration_min'] ?> MIN</span><h1><?= e($lesson['title']) ?></h1><p><?= e($lesson['summary']) ?></p></div></section>
-<div class="site-width lesson-layout"><article class="article-panel"><?php if ($lesson['cover_mime']): ?><img class="article-cover" src="<?= e(url('image?id='.$lesson['id'])) ?>" alt="Õppetunni illustratsioon"><?php endif; ?><?php if (is_logged_in()): ?><form class="save-lesson-form" action="<?= e(url('bookmark')) ?>" method="post"><input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>"><input type="hidden" name="lesson_id" value="<?= (int)$lesson['id'] ?>"><button class="btn btn-outline" type="submit"><?= $bookmarked ? '★ Eemalda salvestatud materjalidest' : '☆ Salvesta õppematerjal' ?></button></form><?php else: ?><p class="save-hint"><a class="text-link" href="<?= e(url('admin/')) ?>">Logi sisse</a>, et õppematerjal oma õpiteele salvestada.</p><?php endif; ?><div class="article-text"><?= nl2br(e($lesson['body'])) ?></div><?php if ($questionCount>0): ?><div class="article-quiz"><div><span class="section-label">PANE END PROOVILE</span><h2>Kas said teemast aru?</h2><p>Vasta <?= (int)$questionCount ?> küsimusele ja kontrolli oma teadmisi.</p></div><a class="btn btn-primary" href="<?= e(url('quiz?id='.$lesson['id'])) ?>">Alusta testi <span aria-hidden="true">→</span></a></div><?php endif; ?><section class="discussion" id="arutelu"><h2>Arutelu</h2><p class="muted">Esita küsimus või jaga oma mõtteid teiste õppijatega.</p><?php if (is_logged_in()): ?><form method="post" action="<?= e(url('comment')) ?>"><input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>"><input type="hidden" name="lesson_id" value="<?= (int)$lesson['id'] ?>"><label for="comment-body">Sinu kommentaar</label><textarea id="comment-body" class="form-control" name="body" maxlength="1200" rows="4" required placeholder="Kirjuta siia..."></textarea><button class="btn btn-primary" type="submit">Saada kommentaar</button></form><?php else: ?><p><a class="text-link" href="<?= e(url('admin/')) ?>">Logi sisse</a>, et arutelus osaleda.</p><?php endif; ?><div class="comment-list"><?php foreach ($comments as $comment): ?><div class="comment"><div class="comment-head"><strong><?= e($comment['username']) ?></strong><time><?= e(substr($comment['created_at'],0,16)) ?></time></div><p><?= nl2br(e($comment['body'])) ?></p></div><?php endforeach; ?><?php if (!$comments): ?><p class="muted">Kommentaare veel ei ole. Ole esimene!</p><?php endif; ?></div></section></article><aside class="lesson-aside"><div class="aside-card"><span class="section-label">ÕPPETUNNI INFO</span><h3><?= e($lesson['subject_name']) ?></h3><div class="aside-row"><span>Tase</span><strong><?= e($lesson['level']) ?></strong></div><div class="aside-row"><span>Kestus</span><strong><?= (int)$lesson['duration_min'] ?> min</strong></div><div class="aside-row"><span>Enesekontroll</span><strong><?= $questionCount>0?'Olemas':'Peagi' ?></strong></div><?php if ($questionCount): ?><a class="btn btn-primary full-width" href="<?= e(url('quiz?id='.$lesson['id'])) ?>">Tee test ↗</a><?php endif; ?></div><a class="aside-back" href="<?= e(url('lessons?subject='.$lesson['subject_id'])) ?>">← Kõik selle aine õppetunnid</a></aside></div>
+<section class="page-heading small-heading">
+    <div class="site-width">
+        <nav class="breadcrumb" aria-label="Asukoht">
+            <a href="<?= e(url()) ?>">Avaleht</a><span aria-hidden="true">/</span>
+            <a href="<?= e(url('lessons?subject='.$lesson['subject_id'])) ?>"><?= e($lesson['subject_name']) ?></a>
+            <span aria-hidden="true">/</span><span>Õppetund</span>
+        </nav>
+        <span class="section-label"><?= e($lesson['subject_name']) ?> · <?= e($lesson['level']) ?> · <?= (int)$lesson['duration_min'] ?> MIN</span>
+        <h1><?= e($lesson['title']) ?></h1>
+        <p><?= e($lesson['summary']) ?></p>
+    </div>
+</section>
+
+<div class="site-width lesson-layout">
+    <article class="article-panel">
+        <?php if ($lesson['cover_mime']): ?>
+            <img class="article-cover" src="<?= e(url('image?id='.$lesson['id'])) ?>" alt="Õppetunni illustratsioon">
+        <?php endif; ?>
+
+        <?php if (is_logged_in()): ?>
+            <form class="save-lesson-form" action="<?= e(url('bookmark')) ?>" method="post">
+                <input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>">
+                <input type="hidden" name="lesson_id" value="<?= (int)$lesson['id'] ?>">
+                <button class="btn btn-outline" type="submit"><?= $bookmarked ? '★ Eemalda salvestatud materjalidest' : '☆ Salvesta õppematerjal' ?></button>
+            </form>
+        <?php else: ?>
+            <p class="save-hint"><a class="text-link" href="<?= e(url('admin/')) ?>">Logi sisse</a>, et õppematerjal oma õpiteele salvestada.</p>
+        <?php endif; ?>
+
+        <div class="article-text"><?= nl2br(e($lesson['body'])) ?></div>
+
+        <?php if ($questionCount>0): ?>
+            <div class="article-quiz">
+                <div>
+                    <span class="section-label">PANE END PROOVILE</span>
+                    <h2>Kas said teemast aru?</h2>
+                    <p>Vasta <?= (int)$questionCount ?> küsimusele ja kontrolli oma teadmisi.</p>
+                </div>
+                <a class="btn btn-primary" href="<?= e(url('quiz?id='.$lesson['id'])) ?>">Alusta testi <span aria-hidden="true">→</span></a>
+            </div>
+        <?php endif; ?>
+
+        <section class="discussion" id="arutelu">
+            <h2>Arutelu</h2>
+            <p class="muted">Esita küsimus või jaga oma mõtteid teiste õppijatega.</p>
+
+            <?php if (is_logged_in()): ?>
+                <form method="post" action="<?= e(url('comment')) ?>">
+                    <input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>">
+                    <input type="hidden" name="lesson_id" value="<?= (int)$lesson['id'] ?>">
+                    <label for="comment-body">Sinu kommentaar</label>
+                    <textarea id="comment-body" class="form-control" name="body" maxlength="1200" rows="4" required placeholder="Kirjuta siia..."></textarea>
+                    <button class="btn btn-primary" type="submit">Saada kommentaar</button>
+                </form>
+            <?php else: ?>
+                <p><a class="text-link" href="<?= e(url('admin/')) ?>">Logi sisse</a>, et arutelus osaleda.</p>
+            <?php endif; ?>
+
+            <div class="comment-list">
+                <?php foreach ($comments as $comment): ?>
+                    <div class="comment">
+                        <div class="comment-head">
+                            <strong><?= e($comment['username']) ?></strong>
+                            <div class="comment-meta-actions">
+                                <time><?= e(substr($comment['created_at'],0,16)) ?></time>
+                                <?php if (is_admin()): ?>
+                                    <form method="post" action="<?= e(url('admin/comment-delete')) ?>" onsubmit="return confirm('Kustutada see kommentaar?');">
+                                        <input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>">
+                                        <input type="hidden" name="comment_id" value="<?= (int)$comment['id'] ?>">
+                                        <input type="hidden" name="lesson_id" value="<?= (int)$lesson['id'] ?>">
+                                        <button class="delete-link" type="submit">Kustuta</button>
+                                    </form>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <p><?= nl2br(e($comment['body'])) ?></p>
+                    </div>
+                <?php endforeach; ?>
+                <?php if (!$comments): ?><p class="muted">Kommentaare veel ei ole. Ole esimene!</p><?php endif; ?>
+            </div>
+        </section>
+    </article>
+
+    <aside class="lesson-aside">
+        <div class="aside-card">
+            <span class="section-label">ÕPPETUNNI INFO</span>
+            <h3><?= e($lesson['subject_name']) ?></h3>
+            <div class="aside-row"><span>Tase</span><strong><?= e($lesson['level']) ?></strong></div>
+            <div class="aside-row"><span>Kestus</span><strong><?= (int)$lesson['duration_min'] ?> min</strong></div>
+            <div class="aside-row"><span>Enesekontroll</span><strong><?= $questionCount>0?'Olemas':'Peagi' ?></strong></div>
+            <?php if ($questionCount): ?><a class="btn btn-primary full-width" href="<?= e(url('quiz?id='.$lesson['id'])) ?>">Tee test ↗</a><?php endif; ?>
+        </div>
+        <a class="aside-back" href="<?= e(url('lessons?subject='.$lesson['subject_id'])) ?>">← Kõik selle aine õppetunnid</a>
+    </aside>
+</div>
