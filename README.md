@@ -40,6 +40,8 @@
 - Apache / XAMPP
 - MVC struktuur
 - Git ja GitHub
+- Selenium WebDriver (E2E/UI testid)
+- Python 3 (Seleniumi testide käivitamine)
 
 ## Käivitamine
 
@@ -93,11 +95,19 @@ opi_eestis/
 
 ## Testimine
 
-Automaatkontrollide käivitamine:
+PHP smoke-kontrollid:
 
 ```powershell
 C:\xampp\php\php.exe tests\smoke.php
 ```
+
+Selenium E2E/UI testid päris brauseris:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tests\e2e\run_e2e.ps1
+```
+
+Admini E2E testide jaoks saab määrata `E2E_ADMIN_EMAIL` ja `E2E_ADMIN_PASSWORD` keskkonnamuutujad. Parooli ei salvestata repositooriumisse.
 
 PHP-faili süntaksi kontroll:
 
@@ -105,7 +115,7 @@ PHP-faili süntaksi kontroll:
 C:\xampp\php\php.exe -l index.php
 ```
 
-Täpsem testimisplaan asub failis [docs/TESTIMINE.md](docs/TESTIMINE.md).
+Seleniumi juhend: [tests/e2e/README.md](tests/e2e/README.md). Täpsem testimisplaan: [docs/TESTIMINE.md](docs/TESTIMINE.md).
 
 ## Dokumentatsioon
 
